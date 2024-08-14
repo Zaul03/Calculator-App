@@ -4,10 +4,36 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
-import java.math.*;
 
 public class Calculator extends JFrame implements ActionListener, KeyListener {
+
+    /////window and window element parameters
+    protected Dimension WINDOW_DIMENSION=new Dimension(350,400),
+                        DISPLAY_PANEL_DIM=new Dimension(340, 50),
+                        BUTTONS_PANEL_DIM=new Dimension(350, 550);
+    protected int HGAP=3,VGAP=3;
+
+    protected Color BACKGRAOUND_COLOR=Color.WHITE,
+                    EQUATION_TXT_COLOR=Color.GRAY,
+                    BUTTONS_BACKGROUND_COLOR=new Color(144, 144, 150),
+                    BUTTONS_PANEL_BACKGROUND_COLOR=new Color(250, 250, 245);
+
+    protected Font  BUTTONS_FONT=new Font("Arial", Font.PLAIN, 23),
+                    EQUATION_TXT_FONT=new Font("Arial", Font.PLAIN, 21),
+                    EQUATION_RES_FONT=new Font("Arial", Font.BOLD, 25);
+
+    String[] BUTTONS_TEXT = {
+        "PI", "e", "C", "DEL",
+        "1/x", "(", ")", "*",
+        "7", "8", "9", "/",
+        "4", "5", "6", "+",
+        "1", "2", "3", "-",
+        ".", "0", " ", "="
+    };
+
+    ////////////Frame icon/////////////////////////
+    Image ICON = getToolkit().getImage("out/production/Calculator/simple-calculator.png");
+
 
     ///////////////variables and elements//////////
     protected JTextField equationTxt, equationRes;
@@ -15,21 +41,22 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
     protected JButton[] buttons = new JButton[24];
 
 
-    ////////////Frame icon/////////////////////////
-    Image imageIcon = getToolkit().getImage("out/production/Calculator/simple-calculator.png");
-
-
     Calculator() {
         super();
+        initUI();
+
+     }
 
 
-        this.setPreferredSize(new Dimension(350, 450));
+
+    public void initUI(){
+        this.setPreferredSize(WINDOW_DIMENSION);
         this.setResizable(false);
-        this.setLayout(new GridLayout(2, 1, 5, 5));
+        this.setLayout(new GridLayout(2, 1, HGAP, VGAP));
         this.setTitle("Calculator");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setIconImage(imageIcon);
-        this.setBackground(Color.white);
+        this.setIconImage(ICON);
+        this.setBackground(BACKGRAOUND_COLOR);
         this.addKeyListener(this);
 
 
@@ -37,16 +64,16 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
         equationTxt.setEditable(false);
         equationTxt.setFocusable(false);
         equationTxt.setHorizontalAlignment(JTextField.RIGHT);
-        equationTxt.setFont(new Font("Arial", Font.PLAIN, 21));
-        equationTxt.setBackground(Color.white);
+        equationTxt.setFont(EQUATION_TXT_FONT);
+        equationTxt.setBackground(BACKGRAOUND_COLOR);
         equationTxt.setBorder(null);
-        equationTxt.setForeground(Color.gray);
+        equationTxt.setForeground(EQUATION_TXT_COLOR);
 
         equationRes = new JTextField("0");
         equationRes.setEditable(false);
         equationRes.setFocusable(false);
         equationRes.setHorizontalAlignment(JTextField.RIGHT);
-        equationRes.setFont(new Font("Arial", Font.BOLD, 25));
+        equationRes.setFont(EQUATION_RES_FONT);
         equationRes.setBackground(Color.white);
         equationRes.setForeground(Color.BLACK);
         equationRes.setBorder(null);
@@ -54,8 +81,7 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
 
         //////////////display panel////////////////////////
         displayPanel = new JPanel(new GridLayout(2, 1));
-        displayPanel.setPreferredSize(new Dimension(340, 50));
-        displayPanel.setMinimumSize(new Dimension(200, 30));
+        displayPanel.setPreferredSize(DISPLAY_PANEL_DIM);
         displayPanel.setBackground(Color.LIGHT_GRAY);
         displayPanel.setVisible(true);
         displayPanel.add(equationTxt);
@@ -64,33 +90,24 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
 
 
         /////////////buttons panel////////////////////////
-        buttonPanel = new JPanel(new GridLayout(6, 4, 3, 3));
-        buttonPanel.setPreferredSize(new Dimension(350, 550));
-        buttonPanel.setMinimumSize(new Dimension(200, 200));
-        buttonPanel.setBackground(new Color(250, 250, 245));
+        buttonPanel = new JPanel(new GridLayout(6, 4, HGAP, VGAP));
+        buttonPanel.setPreferredSize(BUTTONS_PANEL_DIM);
+        buttonPanel.setBackground(BUTTONS_PANEL_BACKGROUND_COLOR);
         buttonPanel.setVisible(true);
         //////////////////////////////////////////////////
 
 
-        //////////buttons text with buttons init//////////
-        String[] buttonsText = {
-            "π", "e", "C", "DEL",
-            "1/x", "(", ")", "x",
-            "7", "8", "9", "/",
-            "4", "5", "6", "+",
-            "1", "2", "3", "-",
-            ".", "0", " ", "="
-        };
+
 
 
         for (int i = 0; i < buttons.length; i++) {
-            buttons[i] = new JButton(buttonsText[i]);
-            buttons[i].setFont(new Font("Arial", Font.PLAIN, 23));
+            buttons[i] = new JButton(BUTTONS_TEXT[i]);
+            buttons[i].setFont(BUTTONS_FONT);
             buttons[i].setFocusable(false);
-            buttons[i].setBackground(new Color(144, 144, 150));
+            buttons[i].setBackground(BUTTONS_BACKGROUND_COLOR);
             buttons[i].setBorderPainted(false);
             buttons[i].addActionListener(this);
-            buttons[i].setActionCommand(buttonsText[i]);
+            buttons[i].setActionCommand(BUTTONS_TEXT[i]);
             buttonPanel.add(buttons[i]);
         }
 ///////////////////////////////////////////////////////////
@@ -100,7 +117,9 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
         this.add(buttonPanel);
         this.setVisible(true);
         this.pack();
+
     }
+
 
 
     @Override
@@ -113,7 +132,7 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
         boolean consecSymbols=crtTxt.endsWith("+")||
                                   crtTxt.endsWith("-")||
                                   crtTxt.endsWith("=")||
-                                  crtTxt.endsWith("x")||
+                                  crtTxt.endsWith("*")||
                                   crtTxt.endsWith("/")||
                                   crtTxt.endsWith(".")||
                                   crtTxt.endsWith("(");
@@ -124,7 +143,7 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
 
 
         switch (cmd) {
-            case "+", "-", "x", "/", "=", ".":
+            case "+", "-", "*", "/", "=", ".":
                 if (duplicate || crtTxt.isEmpty()||consecSymbols)
                     break;
                 equationTxt.setText(crtTxt + cmd);
@@ -138,16 +157,16 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
                     break;
                 equationTxt.setText(crtTxt.substring(0, crtTxt.length() - 1));
                 break;
-            case "π":
+            case "PI":
                 if (duplicate)
                     break;
                 if (crtTxt.equals("0")) {
-                    equationTxt.setText("π");
+                    equationTxt.setText("PI");
                     break;}
                 if(lastIsNr){
-                    equationTxt.setText(crtTxt+"x" + "π");
+                    equationTxt.setText(crtTxt+"*" + "PI");
                     break;}
-                equationTxt.setText(crtTxt + "π");
+                equationTxt.setText(crtTxt + "PI");
                 break;
             case "e":
                 if (duplicate)
@@ -156,7 +175,7 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
                     equationTxt.setText("e");
                     break;}
                 if(lastIsNr){
-                    equationTxt.setText(crtTxt+"x"+cmd);
+                    equationTxt.setText(crtTxt+"*"+cmd);
                     break;}
                 equationTxt.setText(crtTxt + cmd);
                 break;
@@ -165,7 +184,7 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
                     equationTxt.setText(cmd);
                 break;}
                 if(lastIsNr){
-                    equationTxt.setText(crtTxt+"x"+cmd);
+                    equationTxt.setText(crtTxt+"*"+cmd);
                     break;}
                 equationTxt.setText(crtTxt + cmd);
                 break;
@@ -174,7 +193,7 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
                     break;
                 equationTxt.setText(crtTxt + cmd);
                 break;
-            case "1/x":
+            case "1/*":
                 if (resTxt.equals("0")) {
                     equationTxt.setText(null);
                     equationRes.setText("Error! Can not divide by 0!");
@@ -216,7 +235,7 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
         boolean consecSymbols=crtTxt.endsWith("+")||
                                   crtTxt.endsWith("-")||
                                   crtTxt.endsWith("=")||
-                                  crtTxt.endsWith("x")||
+                                  crtTxt.endsWith("*")||
                                   crtTxt.endsWith("/")||
                                   crtTxt.endsWith(".")||
                                   crtTxt.endsWith("(");
@@ -225,11 +244,11 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
         for(int i=0;i<10;i++)
             lastIsNr=crtTxt.endsWith(String.valueOf((char)('0'+i)))||lastIsNr;
 
-        lastIsNr=lastIsNr||crtTxt.endsWith("e")||crtTxt.endsWith("π");
+        lastIsNr=lastIsNr||crtTxt.endsWith("e")||crtTxt.endsWith("PI");
 
 
         switch (key) {
-            case '+', '-', 'x', '/', '.':
+            case '+', '-', '*', '/', '.':
                     if (crtTxt.isEmpty())
                         break;
                     if(consecSymbols)   //works for dupes as well
@@ -262,7 +281,7 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
                         equationTxt.setText("e");
                         break;}
                     if(lastIsNr){
-                        equationTxt.setText(crtTxt+"x" + key);
+                        equationTxt.setText(crtTxt+"*" + key);
                         break;}
                     equationTxt.setText(crtTxt + key);
                     break;
@@ -271,7 +290,7 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
                         equationTxt.setText(String.valueOf(key));
                     break;}
                     if(lastIsNr){
-                        equationTxt.setText(crtTxt+"x"+key);
+                        equationTxt.setText(crtTxt+"*"+key);
                         break;}
                     equationTxt.setText(crtTxt + key);
                     break;
@@ -306,5 +325,5 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
     public void keyReleased(KeyEvent e) {}
     @Override
     public void keyTyped(KeyEvent e) {}
-};
+}
 
