@@ -11,9 +11,10 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
     protected Dimension WINDOW_DIMENSION=new Dimension(350,400),
                         DISPLAY_PANEL_DIM=new Dimension(340, 50),
                         BUTTONS_PANEL_DIM=new Dimension(350, 550);
+
     protected int HGAP=3,VGAP=3;
 
-    protected Color BACKGRAOUND_COLOR=Color.WHITE,
+    protected Color BACKGROUND_COLOR=Color.WHITE,
                     EQUATION_TXT_COLOR=Color.GRAY,
                     BUTTONS_BACKGROUND_COLOR=new Color(144, 144, 150),
                     BUTTONS_PANEL_BACKGROUND_COLOR=new Color(250, 250, 245);
@@ -32,7 +33,7 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
     };
 
     ////////////Frame icon/////////////////////////
-    Image ICON = getToolkit().getImage("out/production/Calculator/simple-calculator.png");
+    Image ICON = getToolkit().getImage("out/production/Calculator/icon.png");
 
 
     ///////////////variables and elements//////////
@@ -45,72 +46,44 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
         super();
         initUI();
 
+
      }
 
 
 
-    public void initUI(){
-        this.setPreferredSize(WINDOW_DIMENSION);
-        this.setResizable(false);
-        this.setLayout(new GridLayout(2, 1, HGAP, VGAP));
-        this.setTitle("Calculator");
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setIconImage(ICON);
-        this.setBackground(BACKGRAOUND_COLOR);
-        this.addKeyListener(this);
+    void initUI(){
 
+        UIBuilder.frameBuilder(this,WINDOW_DIMENSION,BACKGROUND_COLOR,ICON,HGAP,VGAP);
 
-        equationTxt = new JTextField(null);
-        equationTxt.setEditable(false);
-        equationTxt.setFocusable(false);
-        equationTxt.setHorizontalAlignment(JTextField.RIGHT);
-        equationTxt.setFont(EQUATION_TXT_FONT);
-        equationTxt.setBackground(BACKGRAOUND_COLOR);
-        equationTxt.setBorder(null);
-        equationTxt.setForeground(EQUATION_TXT_COLOR);
-
-        equationRes = new JTextField("0");
-        equationRes.setEditable(false);
-        equationRes.setFocusable(false);
-        equationRes.setHorizontalAlignment(JTextField.RIGHT);
-        equationRes.setFont(EQUATION_RES_FONT);
-        equationRes.setBackground(Color.white);
-        equationRes.setForeground(Color.BLACK);
-        equationRes.setBorder(null);
-
-
-        //////////////display panel////////////////////////
         displayPanel = new JPanel(new GridLayout(2, 1));
-        displayPanel.setPreferredSize(DISPLAY_PANEL_DIM);
-        displayPanel.setBackground(Color.LIGHT_GRAY);
-        displayPanel.setVisible(true);
+        buttonPanel = new JPanel(new GridLayout(6, 4, HGAP, VGAP));
+
+        equationTxt=new JTextField(null);
+        equationRes=new JTextField("0");
+
+        UIBuilder.displayBuilder(equationTxt,equationRes,
+                                EQUATION_TXT_FONT,
+                                EQUATION_RES_FONT,
+                                BACKGROUND_COLOR,
+                                EQUATION_TXT_COLOR);
+
+        UIBuilder.paneBuilder(displayPanel,buttonPanel,
+                                DISPLAY_PANEL_DIM,
+                                BUTTONS_PANEL_DIM,
+                                Color.gray,
+                                BUTTONS_PANEL_BACKGROUND_COLOR);
+
+
         displayPanel.add(equationTxt);
         displayPanel.add(equationRes);
-        //////////////////////////////////////////////////
 
+        UIBuilder.buttonsBuilder(buttonPanel,
+                                this,
+                                buttons,
+                                BUTTONS_TEXT,
+                                BUTTONS_FONT,
+                                BUTTONS_BACKGROUND_COLOR);
 
-        /////////////buttons panel////////////////////////
-        buttonPanel = new JPanel(new GridLayout(6, 4, HGAP, VGAP));
-        buttonPanel.setPreferredSize(BUTTONS_PANEL_DIM);
-        buttonPanel.setBackground(BUTTONS_PANEL_BACKGROUND_COLOR);
-        buttonPanel.setVisible(true);
-        //////////////////////////////////////////////////
-
-
-
-
-
-        for (int i = 0; i < buttons.length; i++) {
-            buttons[i] = new JButton(BUTTONS_TEXT[i]);
-            buttons[i].setFont(BUTTONS_FONT);
-            buttons[i].setFocusable(false);
-            buttons[i].setBackground(BUTTONS_BACKGROUND_COLOR);
-            buttons[i].setBorderPainted(false);
-            buttons[i].addActionListener(this);
-            buttons[i].setActionCommand(BUTTONS_TEXT[i]);
-            buttonPanel.add(buttons[i]);
-        }
-///////////////////////////////////////////////////////////
 
 
         this.add(displayPanel);
