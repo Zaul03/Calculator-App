@@ -1,7 +1,7 @@
 package Calculator;
 
 import Calculator.UI.UIBuilder;
-import Calculator.Util.Parsing;
+import Calculator.Evaluator.Evaluation;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,7 +39,7 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
     };
 
     ////////////Frame icon/////////////////////////
-    Image ICON = getToolkit().getImage("src/icon.png");
+    Image ICON = getToolkit().getImage("src/Calculator/icon.png");
 
 
     ///////////////variables and elements//////////
@@ -100,11 +100,11 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
         String cmd = e.getActionCommand();
         String crtTxt=equationTxt.getText();
         String resTxt = equationRes.getText();
-        String[] tmp;
+        String[] res;
 
-        tmp= Parsing.parseIncoming(crtTxt,resTxt,cmd);
-        equationTxt.setText(tmp[0]);
-        equationRes.setText(tmp[1]);}
+        res = Evaluation.parseIncoming(crtTxt,resTxt,cmd);
+        equationTxt.setText(res[0]);
+        equationRes.setText(res[1]);}
 
 
 
@@ -112,7 +112,7 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
     public void keyPressed(KeyEvent e) {
         char key = e.getKeyChar();
         String cmd;
-        String[] tmp;
+        String[] res;
 
         switch (key) {
             case KeyEvent.VK_ENTER:
@@ -129,9 +129,9 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
         String crtTxt = equationTxt.getText();
         String resTxt = equationRes.getText();
 
-        tmp= Parsing.parseIncoming(crtTxt,resTxt,cmd);
-        equationTxt.setText(tmp[0]);
-        equationRes.setText(tmp[1]);}
+        res = Evaluation.parseIncoming(crtTxt,resTxt,cmd);
+        equationTxt.setText(res[0]);
+        equationRes.setText(res[1]);}
 
     @Override
     public void keyReleased(KeyEvent e) {}

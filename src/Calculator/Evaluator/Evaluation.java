@@ -1,18 +1,26 @@
-package Calculator.Util;
-public class Parsing {
+package Calculator.Evaluator;
+
+
+import Calculator.Calculator;
+import Calculator.Util.EvaluationLogic;
+
+public class Evaluation {
 
     private static int nrL=0;
-    private static int nrR=0; //nr of left paranth and right paranth
+    private static int nrR=0; //nr of left parant and right parant
+
+
 
     public static String[] parseIncoming(String crtTxt,String resTxt,String cmd)
     {
 
 
 
+
         boolean duplicate=crtTxt.endsWith(cmd);
-        boolean lastisOp=ParsingLogic.lastIsOper(crtTxt);
-        boolean lastIsNr=ParsingLogic.lastIsNumber(crtTxt);
-        boolean lastIsEqual =crtTxt.endsWith("=");
+        boolean lastisOp=EvaluationLogic.lastIsOper(crtTxt);
+        boolean lastIsNr=EvaluationLogic.lastIsNumber(crtTxt);
+        boolean lastIsEqual=crtTxt.endsWith("=");
 
         if(lastIsEqual&&!cmd.equals("c"))
                 return new String[]{crtTxt,resTxt};
@@ -103,7 +111,7 @@ public class Parsing {
             case "1", "2", "3", "4", "5", "6", "7", "8", "9":
                 if (crtTxt.isEmpty())  //
                     return new String[]{cmd,cmd};
-                if(ParsingLogic.lastIsNumber(resTxt)&&lastIsNr)
+                if(EvaluationLogic.lastIsNumber(resTxt)&&lastIsNr)
                     return new String[]{crtTxt+cmd,resTxt+cmd};
                 if(crtTxt.endsWith(")"))
                     return new String[]{crtTxt+"*"+cmd,cmd};

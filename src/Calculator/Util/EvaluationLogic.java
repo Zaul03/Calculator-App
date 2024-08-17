@@ -1,7 +1,7 @@
 package Calculator.Util;
 
 
-public class ParsingLogic {
+public class EvaluationLogic {
 
     public static boolean lastIsOper(String equation) {
         return equation.endsWith("+")||
