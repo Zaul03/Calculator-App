@@ -1,7 +1,7 @@
 package Calculator;
 
 import Calculator.UI.UIBuilder;
-import Calculator.Util.ParsingUtil;
+import Calculator.Util.Parsing;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +16,7 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
     private final Dimension WINDOW_DIMENSION=new Dimension(350,400),  //main frame dimension
                             DISPLAY_PANEL_DIM=new Dimension(340, 50), //display panel dimension
                             BUTTONS_PANEL_DIM=new Dimension(350, 550);//buttons panel dimension
+
 
     private final int HGAP=3,VGAP=3; //horizontal and vertical gap
 
@@ -76,7 +77,6 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
                                 Color.gray,
                                 BUTTONS_PANEL_BACKGROUND_COLOR);
 
-
         displayPanel.add(equationTxt);
         displayPanel.add(equationRes);
 
@@ -87,14 +87,10 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
                                 BUTTONS_FONT,
                                 BUTTONS_BACKGROUND_COLOR);
 
-
-
         this.add(displayPanel);
         this.add(buttonPanel);
         this.setVisible(true);
-        this.pack();
-
-    }
+        this.pack();}
 
 
 
@@ -106,12 +102,11 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
         String resTxt = equationRes.getText();
         String[] tmp;
 
-        tmp=ParsingUtil.parseIncoming(crtTxt,resTxt,cmd);
+        tmp= Parsing.parseIncoming(crtTxt,resTxt,cmd);
         equationTxt.setText(tmp[0]);
-        equationRes.setText(tmp[1]);
+        equationRes.setText(tmp[1]);}
 
 
-    }
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -131,16 +126,12 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
                 break;
         }
 
-
         String crtTxt = equationTxt.getText();
         String resTxt = equationRes.getText();
 
-        tmp=ParsingUtil.parseIncoming(crtTxt,resTxt,cmd);
+        tmp= Parsing.parseIncoming(crtTxt,resTxt,cmd);
         equationTxt.setText(tmp[0]);
-        equationRes.setText(tmp[1]);
-
-
-    }
+        equationRes.setText(tmp[1]);}
 
     @Override
     public void keyReleased(KeyEvent e) {}
