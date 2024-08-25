@@ -2,8 +2,8 @@
 ## Will write readme later
 
 # To do
- - [ ] Finish the pre-evaluation of the string
-   - [ ] Display the last number
+ - [x] Finish the pre-evaluation of the string
+   - [x] Display the last number
  - [ ] Implement the shunting yard algo. 
    - [ ] LIFO number stack, LIFO operator stack
    - [ ] Evaluate the equation

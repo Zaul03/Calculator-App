@@ -1,7 +1,7 @@
 package Calculator;
 
 import Calculator.UI.UIBuilder;
-import Calculator.Evaluator.Evaluation;
+import Calculator.Evaluator.Evaluator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,12 +50,6 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
 
     public Calculator() {
         super();
-        initUI();
-    }
-
-
-
-    void initUI(){
 
         UIBuilder.frameBuilder(this,WINDOW_DIMENSION,BACKGROUND_COLOR,ICON,HGAP,VGAP);
 
@@ -66,31 +60,32 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
         equationRes=new JTextField("0");
 
         UIBuilder.displayBuilder(equationTxt,equationRes,
-                                EQUATION_TXT_FONT,
-                                EQUATION_RES_FONT,
-                                BACKGROUND_COLOR,
-                                EQUATION_TXT_COLOR);
+            EQUATION_TXT_FONT,
+            EQUATION_RES_FONT,
+            BACKGROUND_COLOR,
+            EQUATION_TXT_COLOR);
 
         UIBuilder.paneBuilder(displayPanel,buttonPanel,
-                                DISPLAY_PANEL_DIM,
-                                BUTTONS_PANEL_DIM,
-                                Color.gray,
-                                BUTTONS_PANEL_BACKGROUND_COLOR);
+            DISPLAY_PANEL_DIM,
+            BUTTONS_PANEL_DIM,
+            Color.gray,
+            BUTTONS_PANEL_BACKGROUND_COLOR);
 
         displayPanel.add(equationTxt);
         displayPanel.add(equationRes);
 
         UIBuilder.buttonsBuilder(buttonPanel,
-                                this,
-                                buttons,
-                                BUTTONS_TEXT,
-                                BUTTONS_FONT,
-                                BUTTONS_BACKGROUND_COLOR);
+            this,
+            buttons,
+            BUTTONS_TEXT,
+            BUTTONS_FONT,
+            BUTTONS_BACKGROUND_COLOR);
 
         this.add(displayPanel);
         this.add(buttonPanel);
         this.setVisible(true);
-        this.pack();}
+        this.pack();
+    }
 
 
 
@@ -102,7 +97,7 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
         String resTxt = equationRes.getText();
         String[] res;
 
-        res = Evaluation.parseIncoming(crtTxt,resTxt,cmd);
+        res = Evaluator.parseIncoming(crtTxt,resTxt,cmd);
         equationTxt.setText(res[0]);
         equationRes.setText(res[1]);}
 
@@ -129,7 +124,7 @@ public class Calculator extends JFrame implements ActionListener, KeyListener {
         String crtTxt = equationTxt.getText();
         String resTxt = equationRes.getText();
 
-        res = Evaluation.parseIncoming(crtTxt,resTxt,cmd);
+        res = Evaluator.parseIncoming(crtTxt,resTxt,cmd);
         equationTxt.setText(res[0]);
         equationRes.setText(res[1]);}
 

@@ -1,12 +1,11 @@
 package Calculator.Util;
 
 
-public class EvaluationLogic {
+public class EvaluatorUtil {
 
-    public static boolean lastIsOper(String equation) {
+    public static boolean lastIsOp(String equation) {
         return equation.endsWith("+")||
             equation.endsWith("-")||
-            equation.endsWith("=")||
             equation.endsWith("*")||
             equation.endsWith("/")||
             equation.endsWith("^");}
